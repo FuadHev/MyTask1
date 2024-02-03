@@ -11,19 +11,25 @@ public class UserEntity {
     private String name;
     private String surname;
 
+
     public ToOne<CompanyEntity> company;
 
     public void setCompany(CompanyEntity company) {
         this.company.setTarget(company);
     }
 
-    public UserEntity(){
+    public CompanyEntity getCompany() {
+        return company.getTarget();
+    }
+
+    public UserEntity() {
 
     }
-    public UserEntity(long id,String name,String surname){
-        this.id=id;
-        this.name=name;
-        this.surname=surname;
+
+    public UserEntity(long id, String name, String surname) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
     }
 
     public void setId(long id) {
@@ -52,7 +58,7 @@ public class UserEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", company=" + company +
+                ", company=" + company.getTarget() +
                 '}';
     }
 

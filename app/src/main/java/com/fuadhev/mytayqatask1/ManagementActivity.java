@@ -12,6 +12,7 @@ import android.util.Log;
 import com.fuadhev.mytayqatask1.controller.DBController;
 import com.fuadhev.mytayqatask1.data.entity.CompanyEntity;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
+import com.fuadhev.mytayqatask1.data.network.model.User;
 import com.fuadhev.mytayqatask1.databinding.ActivityManagementBinding;
 
 import java.util.ArrayList;
@@ -40,10 +41,12 @@ public class ManagementActivity extends AppCompatActivity {
         List<CompanyEntity> list= DBController.getAllCompany();
         for(CompanyEntity companyEntity : list){
             Log.e(" ", companyEntity.toString());
-            for (UserEntity user : companyEntity.getUserList()){
-                Log.e("user", user.getName());
-            }
         }
+        List<UserEntity> userList= DBController.getAllUser();
+        for(UserEntity user : userList){
+            Log.e("user", user.getCompany().toString());
+        }
+
 
         binding.viewPager.setAdapter(adapter);
 

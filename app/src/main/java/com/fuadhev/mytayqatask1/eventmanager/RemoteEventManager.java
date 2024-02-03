@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.login.LoginException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,13 +49,16 @@ public class RemoteEventManager {
                         DBController.attachCompany(companyEntity);
                         ArrayList<UserEntity> userEntityList = new ArrayList<>();
 
-                        ;
                         for (User user : company.getUserList()) {
                             UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname());
+
+                            companyEntity.getUserList().add(userEntity);
                             userEntity.setCompany(companyEntity);
-                            DBController.attachUser(userEntity);
-                            DBController.insertAllUsers(userEntity);
                             userEntityList.add(userEntity);
+                            DBController.attachUser(userEntity);
+
+                            DBController.insertAllUsers(userEntity);
+
                         }
                         companyEntity.setUserList(userEntityList);
                         DBController.insertAllCompanies(companyEntity);

@@ -25,7 +25,9 @@ public class DBController {
     public static List<CompanyEntity> getAllCompany(){
         return CompanyDao.getAllCompany();
     }
-
+    public static List<UserEntity> getAllUser(){
+        return UserDao.getAllUser();
+    }
     public static void attachCompany(CompanyEntity companyEntity) {
         CompanyDao.attachCompany(companyEntity);
     }

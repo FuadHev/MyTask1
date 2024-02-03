@@ -55,7 +55,7 @@ public class CompanyEntity {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", userList=" + userList +
+                ", userList=" + userList.size() +
                 '}';
     }
 }

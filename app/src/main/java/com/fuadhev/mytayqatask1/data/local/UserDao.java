@@ -1,6 +1,5 @@
 package com.fuadhev.mytayqatask1.data.local;
 
-import com.fuadhev.mytayqatask1.data.entity.CompanyEntity;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
 import com.fuadhev.mytayqatask1.data.local.db.ObjectBox;
 
@@ -18,5 +17,9 @@ public class UserDao {
     }
     public static void attachUser(UserEntity userEntity) {
         boxStore.attach(userEntity);
+    }
+
+    public static List<UserEntity> getAllUser(){
+        return boxStore.getAll();
     }
 }
