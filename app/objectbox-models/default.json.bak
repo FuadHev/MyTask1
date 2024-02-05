@@ -20,7 +20,13 @@
           "type": 9
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "3:6866156998550551242",
+          "name": "userList",
+          "targetId": "3:8730448501035901238"
+        }
+      ]
     },
     {
       "id": "3:8730448501035901238",
@@ -42,14 +48,6 @@
           "id": "3:3292244964308984843",
           "name": "surname",
           "type": 9
-        },
-        {
-          "id": "4:7088926632530708482",
-          "name": "companyId",
-          "indexId": "1:6646177145265608178",
-          "type": 11,
-          "flags": 520,
-          "relationTarget": "CompanyEntity"
         }
       ],
       "relations": []
@@ -57,17 +55,20 @@
   ],
   "lastEntityId": "3:8730448501035901238",
   "lastIndexId": "1:6646177145265608178",
-  "lastRelationId": "2:750805899976946121",
+  "lastRelationId": "3:6866156998550551242",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [
     1071056813214312362
   ],
-  "retiredIndexUids": [],
+  "retiredIndexUids": [
+    6646177145265608178
+  ],
   "retiredPropertyUids": [
     5099526500797934636,
-    2364256716906090235
+    2364256716906090235,
+    7088926632530708482
   ],
   "retiredRelationUids": [
     1364739517395478804,

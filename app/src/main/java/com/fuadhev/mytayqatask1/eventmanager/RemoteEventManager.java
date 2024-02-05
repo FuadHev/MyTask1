@@ -49,21 +49,36 @@ public class RemoteEventManager {
 
                     for (Company company : companyList) {
                         CompanyEntity companyEntity = new CompanyEntity(company.getId(), company.getName());
-                        DBController.attachCompany(companyEntity);
-                        ArrayList<UserEntity> userEntityList = new ArrayList<>();
+
+                        DBController.insertAllCompanies(companyEntity);
+                        List<UserEntity> userlist = new ArrayList<>();
+
                         for (User user : company.getUserList()) {
                             UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname());
-                            companyEntity.getUserList().add(userEntity);
                             userEntity.setCompany(companyEntity);
-                            userEntityList.add(userEntity);
-                            DBController.attachUser(userEntity);
+                            companyEntity.getUserList().add(userEntity);
                             DBController.insertAllUsers(userEntity);
-
                         }
-
-                        companyEntity.setUserList(userEntityList);
                         DBController.insertAllCompanies(companyEntity);
                     }
+
+//                    for (Company company : companyList) {
+//                        CompanyEntity companyEntity = new CompanyEntity(company.getId(), company.getName());
+//                        DBController.attachCompany(companyEntity);
+//                        ArrayList<UserEntity> userEntityList = new ArrayList<>();
+//                        for (User user : company.getUserList()) {
+//                            UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname());
+//                            companyEntity.getUserList().add(userEntity);
+//                            userEntity.setCompany(companyEntity);
+//                            userEntityList.add(userEntity);
+//                            DBController.attachUser(userEntity);
+//                            DBController.insertAllUsers(userEntity);
+//
+//                        }
+//
+//                        companyEntity.setUserList(userEntityList);
+//                        DBController.insertAllCompanies(companyEntity);
+//                    }
 
 //
 //                    for (Company company : companyList) {

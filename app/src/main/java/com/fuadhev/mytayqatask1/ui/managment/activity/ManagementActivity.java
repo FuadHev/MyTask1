@@ -1,4 +1,4 @@
-package com.fuadhev.mytayqatask1;
+package com.fuadhev.mytayqatask1.ui.managment.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,19 +7,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import com.fuadhev.mytayqatask1.controller.DBController;
-import com.fuadhev.mytayqatask1.data.entity.CompanyEntity;
-import com.fuadhev.mytayqatask1.data.entity.UserEntity;
-import com.fuadhev.mytayqatask1.data.network.model.User;
 import com.fuadhev.mytayqatask1.databinding.ActivityManagementBinding;
-import com.fuadhev.mytayqatask1.eventmanager.RemoteEventManager;
-
-import org.greenrobot.eventbus.EventBus;
+import com.fuadhev.mytayqatask1.ui.managment.fragment.BlockedFragment;
+import com.fuadhev.mytayqatask1.ui.managment.fragment.CompanyFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ManagementActivity extends AppCompatActivity {
 
@@ -41,7 +34,7 @@ public class ManagementActivity extends AppCompatActivity {
 
 //        List<CompanyEntity> list= DBController.getAllCompany();
 //        for(CompanyEntity companyEntity : list){
-//            Log.e("company", companyEntity.getName());
+//            Log.e("company",  companyEntity.getName());
 //            companyEntity.getUserList().size();
 //            for (UserEntity user:companyEntity.getUserList()){
 //                Log.e("user", user.getName());

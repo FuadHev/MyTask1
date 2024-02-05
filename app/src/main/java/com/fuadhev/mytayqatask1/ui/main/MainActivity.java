@@ -1,34 +1,17 @@
-package com.fuadhev.mytayqatask1;
+package com.fuadhev.mytayqatask1.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
-import com.fuadhev.mytayqatask1.data.entity.MyObjectBox;
-import com.fuadhev.mytayqatask1.data.local.db.ObjectBox;
-import com.fuadhev.mytayqatask1.data.network.ApiService;
-import com.fuadhev.mytayqatask1.data.network.RetrofitClient;
-import com.fuadhev.mytayqatask1.data.network.model.Company;
-import com.fuadhev.mytayqatask1.data.network.model.CompanyListResponse;
+import com.fuadhev.mytayqatask1.ui.managment.activity.ManagementActivity;
 import com.fuadhev.mytayqatask1.databinding.ActivityMainBinding;
 import com.fuadhev.mytayqatask1.event.RemoteEvent;
 import com.fuadhev.mytayqatask1.eventmanager.RemoteEventManager;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.IOException;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 

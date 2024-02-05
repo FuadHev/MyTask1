@@ -1,4 +1,4 @@
-package com.fuadhev.mytayqatask1;
+package com.fuadhev.mytayqatask1.ui.managment.fragment;
 
 import android.os.Bundle;
 

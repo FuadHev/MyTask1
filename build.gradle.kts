@@ -7,6 +7,7 @@ buildscript {
 
     repositories {
         mavenCentral()
+        jcenter()
         // Note: 2.9.0 and older are available on jcenter()
     }
 

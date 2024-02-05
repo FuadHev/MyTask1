@@ -1,4 +1,4 @@
-package com.fuadhev.mytayqatask1;
+package com.fuadhev.mytayqatask1.ui.managment.fragment;
 
 import android.os.Bundle;
 
@@ -50,9 +50,10 @@ public class CompanyFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LocalDbDataEvent event) {
+        Log.e("company", event.getCompanyList().toString());
         for (CompanyEntity companyEntity : event.getCompanyList()) {
             Log.e("company", companyEntity.getName());
-            companyEntity.getUserList().size();
+//            companyEntity.getUserList().size();
             for (UserEntity user : companyEntity.getUserList()) {
                 Log.e("user", user.getName());
             }

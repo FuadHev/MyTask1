@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.fuadhev.mytayqatask1.BlockedFragment;
-import com.fuadhev.mytayqatask1.CompanyFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
 }
 
+
+
 android {
     namespace = "com.fuadhev.mytayqatask1"
     compileSdk = 34
@@ -58,6 +60,11 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Using JCenter
+    implementation ("eu.davidea:flexible-adapter:5.1.0")
+    implementation ("eu.davidea:flexible-adapter-ui:1.0.0")
+
 }
 
 apply(plugin = "io.objectbox")
