@@ -1,5 +1,7 @@
 package com.fuadhev.mytayqatask1.data.entity;
 
+import android.util.Log;
+
 import java.util.List;
 
 import io.objectbox.annotation.Backlink;
@@ -55,7 +57,7 @@ public class CompanyEntity {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", userList=" + userList.size() +
+                ", userList=" + userList +
                 '}';
     }
 }

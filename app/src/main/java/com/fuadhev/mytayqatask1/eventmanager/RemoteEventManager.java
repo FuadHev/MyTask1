@@ -11,8 +11,11 @@ import com.fuadhev.mytayqatask1.data.network.RetrofitClient;
 import com.fuadhev.mytayqatask1.data.network.model.Company;
 import com.fuadhev.mytayqatask1.data.network.model.CompanyListResponse;
 import com.fuadhev.mytayqatask1.data.network.model.User;
+import com.fuadhev.mytayqatask1.event.LocalDbDataEvent;
+import com.fuadhev.mytayqatask1.event.LocalDbEvent;
 import com.fuadhev.mytayqatask1.event.RemoteEvent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -48,18 +51,16 @@ public class RemoteEventManager {
                         CompanyEntity companyEntity = new CompanyEntity(company.getId(), company.getName());
                         DBController.attachCompany(companyEntity);
                         ArrayList<UserEntity> userEntityList = new ArrayList<>();
-
                         for (User user : company.getUserList()) {
                             UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname());
-
                             companyEntity.getUserList().add(userEntity);
                             userEntity.setCompany(companyEntity);
                             userEntityList.add(userEntity);
                             DBController.attachUser(userEntity);
-
                             DBController.insertAllUsers(userEntity);
 
                         }
+
                         companyEntity.setUserList(userEntityList);
                         DBController.insertAllCompanies(companyEntity);
                     }
@@ -97,5 +98,10 @@ public class RemoteEventManager {
         });
     }
 
-
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void getLocalData(LocalDbEvent event){
+        List<CompanyEntity> companyList=DBController.getAllCompany();
+        EventBus.getDefault().post(new LocalDbDataEvent(companyList));
+        Log.e("TAG", "getLocalData: " );
+    }
 }

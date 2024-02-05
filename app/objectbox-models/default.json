@@ -20,7 +20,13 @@
           "type": 9
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "3:6866156998550551242",
+          "name": "userList",
+          "targetId": "3:8730448501035901238"
+        }
+      ]
     },
     {
       "id": "3:8730448501035901238",
@@ -57,7 +63,7 @@
   ],
   "lastEntityId": "3:8730448501035901238",
   "lastIndexId": "1:6646177145265608178",
-  "lastRelationId": "2:750805899976946121",
+  "lastRelationId": "3:6866156998550551242",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

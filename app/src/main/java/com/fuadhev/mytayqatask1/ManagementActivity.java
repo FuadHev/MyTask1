@@ -14,6 +14,9 @@ import com.fuadhev.mytayqatask1.data.entity.CompanyEntity;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
 import com.fuadhev.mytayqatask1.data.network.model.User;
 import com.fuadhev.mytayqatask1.databinding.ActivityManagementBinding;
+import com.fuadhev.mytayqatask1.eventmanager.RemoteEventManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +27,7 @@ public class ManagementActivity extends AppCompatActivity {
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     private ArrayList<String> fragmentTitleList = new ArrayList<>();
 
-
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +39,18 @@ public class ManagementActivity extends AppCompatActivity {
 
         // add the fragments
 
-        List<CompanyEntity> list= DBController.getAllCompany();
-        for(CompanyEntity companyEntity : list){
-            Log.e(" ", companyEntity.toString());
-        }
-        List<UserEntity> userList= DBController.getAllUser();
-        for(UserEntity user : userList){
-            Log.e("user", user.getCompany().toString());
-        }
+//        List<CompanyEntity> list= DBController.getAllCompany();
+//        for(CompanyEntity companyEntity : list){
+//            Log.e("company", companyEntity.getName());
+//            companyEntity.getUserList().size();
+//            for (UserEntity user:companyEntity.getUserList()){
+//                Log.e("user", user.getName());
+//            }
+//        }
+//        List<UserEntity> userList= DBController.getAllUser();
+//        for(UserEntity user : userList){
+//            Log.e("user", user.getCompany().toString());
+//        }
 
 
         binding.viewPager.setAdapter(adapter);
@@ -68,4 +73,5 @@ public class ManagementActivity extends AppCompatActivity {
             return fragmentList.get(position);
         }
     }
+
 }

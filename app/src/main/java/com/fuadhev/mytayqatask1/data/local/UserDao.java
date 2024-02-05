@@ -17,6 +17,7 @@ public class UserDao {
     }
     public static void attachUser(UserEntity userEntity) {
         boxStore.attach(userEntity);
+
     }
 
     public static List<UserEntity> getAllUser(){
