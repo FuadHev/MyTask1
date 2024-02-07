@@ -50,10 +50,7 @@ public class CompanyEntity {
     public List<UserEntity> getUserList() {
         return userList;
     }
-    public List<UserEntity> gettUserList() {
-        return this.userList;
-    }
-    // toString method
+
     @Override
     public String toString() {
         return "Company{" +

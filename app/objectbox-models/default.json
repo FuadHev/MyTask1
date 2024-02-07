@@ -24,7 +24,7 @@
     },
     {
       "id": "3:8730448501035901238",
-      "lastPropertyId": "5:3669437078884478979",
+      "lastPropertyId": "6:7023327497481950334",
       "name": "UserEntity",
       "properties": [
         {
@@ -50,6 +50,11 @@
           "type": 11,
           "flags": 520,
           "relationTarget": "CompanyEntity"
+        },
+        {
+          "id": "6:7023327497481950334",
+          "name": "isBlock",
+          "type": 1
         }
       ],
       "relations": []

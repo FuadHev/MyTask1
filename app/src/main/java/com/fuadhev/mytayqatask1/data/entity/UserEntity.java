@@ -11,8 +11,16 @@ public class UserEntity {
     private String name;
     private String surname;
 
+    private Boolean isBlock=false;
 
     public ToOne<CompanyEntity> company;
+    public Boolean getIsBlock() {
+        return isBlock;
+    }
+    public void setBlock(Boolean block) {
+        isBlock = block;
+    }
+
 
     public void setCompany(CompanyEntity company) {
         this.company.setTarget(company);
@@ -26,22 +34,15 @@ public class UserEntity {
 
     }
 
-    public UserEntity(long id, String name, String surname) {
+    public UserEntity(long id, String name, String surname,Boolean isBlock) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.isBlock=isBlock;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public long getId() {
@@ -58,7 +59,8 @@ public class UserEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", company=" + company.getTarget() +
+                ", isBlock=" + isBlock +
+                ", company=" + company +
                 '}';
     }
 

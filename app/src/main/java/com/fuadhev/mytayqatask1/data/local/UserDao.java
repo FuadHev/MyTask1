@@ -1,6 +1,7 @@
 package com.fuadhev.mytayqatask1.data.local;
 
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
+import com.fuadhev.mytayqatask1.data.entity.UserEntity_;
 import com.fuadhev.mytayqatask1.data.local.db.ObjectBox;
 
 import java.util.List;
@@ -9,18 +10,25 @@ import io.objectbox.Box;
 
 public class UserDao {
 
-    private static final Box<UserEntity> boxStore= ObjectBox.getBoxStore().boxFor(UserEntity.class);
+    private static final Box<UserEntity> boxStore = ObjectBox.getBoxStore().boxFor(UserEntity.class);
 
 
-    public static void insertAll(UserEntity userEntity){
+    public static void insertAll(UserEntity userEntity) {
         boxStore.put(userEntity);
     }
-    public static void attachUser(UserEntity userEntity) {
-        boxStore.attach(userEntity);
+
+    public static List<UserEntity> getBlockUser() {
+        List<UserEntity> blockUsers = boxStore.query().equal(UserEntity_.isBlock, true).build().find();
+
+        return blockUsers;
+    }
+
+    public static void updateUsers(List<UserEntity> userEntities) {
+        boxStore.put(userEntities);
 
     }
 
-    public static List<UserEntity> getAllUser(){
+    public static List<UserEntity> getAllUser() {
         return boxStore.getAll();
     }
 }

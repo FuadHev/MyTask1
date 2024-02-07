@@ -62,8 +62,8 @@ implements IExpandable<CompanyItem.GroupViewHolder,UserItem> ,IHeader<CompanyIte
 
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, GroupViewHolder holder, int position, List<Object> payloads) {
-        holder.getTv_companyName().setText(mCompany.getName());
-        holder.getIc_more().setImageResource(R.drawable.ic_more);
+        holder.tv_companyName.setText(mCompany.getName());
+        holder.ic_more.setImageResource(R.drawable.ic_more);
         holder.ic_more.setOnClickListener(view -> listener.onCompanyItemClicked(holder.getAdapterPosition()));
     }
 
@@ -74,8 +74,6 @@ implements IExpandable<CompanyItem.GroupViewHolder,UserItem> ,IHeader<CompanyIte
 
     @Override
     public void setExpanded(boolean expanded) {
-        Log.d("Fuad06", "setExpanded: " + expanded);
-        Log.d("Fuad06", "setExpanded: " + mExpanded);
         this.mExpanded = expanded;
     }
 
@@ -104,19 +102,8 @@ implements IExpandable<CompanyItem.GroupViewHolder,UserItem> ,IHeader<CompanyIte
 
         }
 
-        public ImageView getIc_more() {
-            return ic_more;
-        }
-
-        public TextView getTv_companyName() {
-            return tv_companyName;
-        }
 
 
-//        @Override
-//        protected boolean isViewExpandableOnClick() {
-//            return true;
-//        }
     }
 
     public interface OnCompanyItemClickListener{

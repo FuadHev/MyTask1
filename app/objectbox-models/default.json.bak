@@ -20,17 +20,11 @@
           "type": 9
         }
       ],
-      "relations": [
-        {
-          "id": "3:6866156998550551242",
-          "name": "userList",
-          "targetId": "3:8730448501035901238"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "3:8730448501035901238",
-      "lastPropertyId": "4:7088926632530708482",
+      "lastPropertyId": "5:3669437078884478979",
       "name": "UserEntity",
       "properties": [
         {
@@ -48,13 +42,21 @@
           "id": "3:3292244964308984843",
           "name": "surname",
           "type": 9
+        },
+        {
+          "id": "5:3669437078884478979",
+          "name": "companyId",
+          "indexId": "2:60971430011953476",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "CompanyEntity"
         }
       ],
       "relations": []
     }
   ],
   "lastEntityId": "3:8730448501035901238",
-  "lastIndexId": "1:6646177145265608178",
+  "lastIndexId": "2:60971430011953476",
   "lastRelationId": "3:6866156998550551242",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -72,7 +74,8 @@
   ],
   "retiredRelationUids": [
     1364739517395478804,
-    750805899976946121
+    750805899976946121,
+    6866156998550551242
   ],
   "version": 1
 }

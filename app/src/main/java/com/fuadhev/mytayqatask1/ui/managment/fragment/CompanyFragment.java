@@ -4,21 +4,23 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fuadhev.mytayqatask1.R;
 import com.fuadhev.mytayqatask1.data.entity.CompanyEntity;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
-import com.fuadhev.mytayqatask1.data.network.model.User;
-import com.fuadhev.mytayqatask1.databinding.FragmentBlockedBinding;
 import com.fuadhev.mytayqatask1.databinding.FragmentCompanyBinding;
 import com.fuadhev.mytayqatask1.event.LocalDbDataEvent;
 import com.fuadhev.mytayqatask1.event.LocalDbEvent;
-import com.fuadhev.mytayqatask1.eventmanager.RemoteEventManager;
 import com.fuadhev.mytayqatask1.ui.managment.fragment.adapter.CompanyAdapter;
 import com.fuadhev.mytayqatask1.ui.model.CompanyItem;
 import com.fuadhev.mytayqatask1.ui.model.UserItem;
@@ -33,19 +35,19 @@ import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import eu.davidea.flexibleadapter.items.IFlexible;
 
 
-public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyItemClickListener  {
+public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyItemClickListener, UserItem.UpdateIsBlockMenuVisibility {
 
 
     private FragmentCompanyBinding binding;
     private CompanyAdapter adapter;
 
+    private Menu myMenu;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         EventBus.getDefault().register(this);
     }
 
@@ -53,18 +55,42 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentCompanyBinding.inflate(inflater, container, false);
-        adapter = new CompanyAdapter(Collections.emptyList());
-//        adapter.setDisplayHeadersAtStartUp(true)
-//                .setStickyHeaders(true)
-//                .setAutoCollapseOnExpand(false)
-//                .setAutoScrollOnExpand(true);
-//        adapter.mItemClickListener = this;
-        binding.companyRv.setAdapter(adapter);
+
+
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
+        setAdapter();
+        setHasOptionsMenu(true);
         EventBus.getDefault().post(new LocalDbEvent());
+
 
         return binding.getRoot();
     }
 
+
+    private void setAdapter() {
+        adapter = new CompanyAdapter(Collections.emptyList());
+        binding.companyRv.setAdapter(adapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        myMenu = menu;
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_block) {
+            Log.e("menu", "onOptionsItemSelected: ");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LocalDbDataEvent event) {
@@ -77,9 +103,12 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
 
             for (UserEntity user : companyEntity.getUserList()) {
                 Log.e("user", user.getName());
-                userList.add(new UserItem(user));
-            }
 
+                if (!user.getIsBlock()) {
+                    Log.e("user", "userblack"+ user.getIsBlock());
+                    userList.add(new UserItem(user, this));
+                }
+            }
             companyItem.setSubItems(userList);
             newList.add(companyItem);
         }
@@ -94,34 +123,41 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
     }
 
 
-  /*  @Override
-    public boolean onItemClick(View view, int position) {
-        Log.d("Fuad01", "onItemClick size: " + adapter.getCurrentItems().size());
-        Log.d("Fuad03", "onItemClick pos: " + position);
-
-        if (adapter.getItem(position) == null) return false;
-
-        if (adapter.isExpanded(position)) {
-            Log.d("Fuad02", "onItemClick isExpanded: " + adapter.isExpanded(position));
-            adapter.collapse(position);
-            Log.d("Fuad07", "onItemClick: inside if: " + adapter.isExpanded(position));
-        }
-        else {
-            Log.d("Fuad08", "onItemClick: +++++++");
-            adapter.expand(position);
-        }
-
-        return false;
-    }*/
-
     @Override
     public void onCompanyItemClicked(int position) {
 
         if (adapter.isExpanded(position)) {
             adapter.collapse(position);
-        }
-        else {
+        } else {
             adapter.expand(position);
+        }
+
+
+    }
+
+
+    @Override
+    public void setBlockMenuVisibility() {
+        Boolean anyBlocked = false;
+        for (AbstractFlexibleItem item : adapter.getCurrentItems()) {
+            if (anyBlocked) {
+               break;
+            }
+            if (item instanceof CompanyItem) {
+                Log.e("TAG", "setBlockMenuVisibility: itemuser"+(((CompanyItem) item).getCompanyItem()));
+                List<UserItem> userItems= (((CompanyItem) item).getSubItems());
+                for (UserItem useritem : userItems) {
+                    if (useritem.getUserItem().getIsBlock()) {
+                        anyBlocked = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (anyBlocked) {
+            myMenu.findItem(R.id.menu_block).setVisible(true);
+        } else {
+            myMenu.findItem(R.id.menu_block).setVisible(false);
         }
     }
 }

@@ -54,7 +54,7 @@ public class RemoteEventManager {
                         List<UserEntity> userlist = new ArrayList<>();
 
                         for (User user : company.getUserList()) {
-                            UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname());
+                            UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname(),false);
                             userEntity.setCompany(companyEntity);
                             companyEntity.getUserList().add(userEntity);
                             DBController.insertAllUsers(userEntity);

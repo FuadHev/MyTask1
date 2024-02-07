@@ -28,11 +28,16 @@ public class DBController {
     public static List<UserEntity> getAllUser(){
         return UserDao.getAllUser();
     }
-    public static void attachCompany(CompanyEntity companyEntity) {
-        CompanyDao.attachCompany(companyEntity);
-    }
 
-    public static void attachUser(UserEntity userEntity) {
-        UserDao.attachUser(userEntity);
+//    public static void attachCompany(CompanyEntity companyEntity) {
+//        CompanyDao.attachCompany(companyEntity);
+//    }
+
+//    public static void attachUser(UserEntity userEntity) {
+//        UserDao.attachUser(userEntity);
+//    }
+
+    public static void updateUsers(List<UserEntity> userEntities ){
+        UserDao.updateUsers(userEntities);
     }
 }
