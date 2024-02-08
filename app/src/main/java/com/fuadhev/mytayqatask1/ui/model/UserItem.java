@@ -54,7 +54,7 @@ public class UserItem extends AbstractFlexibleItem<UserItem.ChildViewHolder> {
     @Override
     public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, ChildViewHolder holder, int position, List<Object> payloads) {
         holder.tv_userName.setText(getUserItem().getName());
-        holder.ic_block.setVisibility(View.GONE);
+        holder.checkBox.setChecked(false);
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             if (isChecked) {

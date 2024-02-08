@@ -19,6 +19,7 @@ import com.fuadhev.mytayqatask1.R;
 import com.fuadhev.mytayqatask1.data.entity.CompanyEntity;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
 import com.fuadhev.mytayqatask1.databinding.FragmentCompanyBinding;
+import com.fuadhev.mytayqatask1.event.SetBlockUserEvent;
 import com.fuadhev.mytayqatask1.event.LocalDbDataEvent;
 import com.fuadhev.mytayqatask1.event.LocalDbEvent;
 import com.fuadhev.mytayqatask1.ui.managment.fragment.adapter.CompanyAdapter;
@@ -33,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 
 
@@ -62,11 +62,8 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
         setHasOptionsMenu(true);
         EventBus.getDefault().post(new LocalDbEvent());
 
-
         return binding.getRoot();
     }
-
-
     private void setAdapter() {
         adapter = new CompanyAdapter(Collections.emptyList());
         binding.companyRv.setAdapter(adapter);
@@ -85,7 +82,25 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
         int id = item.getItemId();
 
         if (id == R.id.menu_block) {
-            Log.e("menu", "onOptionsItemSelected: ");
+
+            List<UserEntity> blockUserList = new ArrayList<>();
+
+            for (AbstractFlexibleItem flexibleItem : adapter.getCurrentItems()) {
+                if (flexibleItem instanceof CompanyItem) {
+                    List<UserItem> userItems = (((CompanyItem) flexibleItem).getSubItems());
+                    for (UserItem useritem : userItems) {
+                        if (useritem.getUserItem().getIsBlock()) {
+                            blockUserList.add(useritem.getUserItem());
+                        }
+                    }
+                }
+            }
+
+            EventBus.getDefault().post(new SetBlockUserEvent(blockUserList));
+
+            binding.toolbar.getMenu().findItem(R.id.menu_block).setVisible(false);
+
+
             return true;
         }
 
@@ -105,7 +120,7 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
                 Log.e("user", user.getName());
 
                 if (!user.getIsBlock()) {
-                    Log.e("user", "userblack"+ user.getIsBlock());
+                    Log.e("user", "userblack" + user.getIsBlock());
                     userList.add(new UserItem(user, this));
                 }
             }
@@ -132,7 +147,6 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
             adapter.expand(position);
         }
 
-
     }
 
 
@@ -141,13 +155,15 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
         Boolean anyBlocked = false;
         for (AbstractFlexibleItem item : adapter.getCurrentItems()) {
             if (anyBlocked) {
-               break;
+                break;
             }
             if (item instanceof CompanyItem) {
-                Log.e("TAG", "setBlockMenuVisibility: itemuser"+(((CompanyItem) item).getCompanyItem()));
-                List<UserItem> userItems= (((CompanyItem) item).getSubItems());
+                Log.e("TAG", "setBlockMenuVisibility: itemuser" + (((CompanyItem) item).getCompanyItem()));
+                List<UserItem> userItems = (((CompanyItem) item).getSubItems());
                 for (UserItem useritem : userItems) {
                     if (useritem.getUserItem().getIsBlock()) {
+                        Log.e("TAG", "setBlockMenuVisibility: itemuse" + useritem.getUserItem().toString());
+
                         anyBlocked = true;
                         break;
                     }
@@ -155,9 +171,9 @@ public class CompanyFragment extends Fragment implements CompanyItem.OnCompanyIt
             }
         }
         if (anyBlocked) {
-            myMenu.findItem(R.id.menu_block).setVisible(true);
+            binding.toolbar.getMenu().findItem(R.id.menu_block).setVisible(true);
         } else {
-            myMenu.findItem(R.id.menu_block).setVisible(false);
+            binding.toolbar.getMenu().findItem(R.id.menu_block).setVisible(false);
         }
     }
 }

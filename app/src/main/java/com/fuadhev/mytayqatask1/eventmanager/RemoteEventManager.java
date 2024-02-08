@@ -5,12 +5,15 @@ import android.util.Log;
 import com.fuadhev.mytayqatask1.controller.DBController;
 import com.fuadhev.mytayqatask1.data.entity.CompanyEntity;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
-import com.fuadhev.mytayqatask1.data.local.UserDao;
 import com.fuadhev.mytayqatask1.data.network.ApiService;
 import com.fuadhev.mytayqatask1.data.network.RetrofitClient;
 import com.fuadhev.mytayqatask1.data.network.model.Company;
 import com.fuadhev.mytayqatask1.data.network.model.CompanyListResponse;
 import com.fuadhev.mytayqatask1.data.network.model.User;
+import com.fuadhev.mytayqatask1.event.BlockUserEvent;
+import com.fuadhev.mytayqatask1.event.DeleteUserEvent;
+import com.fuadhev.mytayqatask1.event.GetBlockUserEvent;
+import com.fuadhev.mytayqatask1.event.SetBlockUserEvent;
 import com.fuadhev.mytayqatask1.event.LocalDbDataEvent;
 import com.fuadhev.mytayqatask1.event.LocalDbEvent;
 import com.fuadhev.mytayqatask1.event.RemoteEvent;
@@ -22,8 +25,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.security.auth.login.LoginException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +38,6 @@ public class RemoteEventManager {
         ApiService apiService = retrofit.create(ApiService.class);
 
         Call<CompanyListResponse> call = apiService.getData();
-
         call.enqueue(new Callback<CompanyListResponse>() {
             @Override
             public void onResponse(Call<CompanyListResponse> call, Response<CompanyListResponse> response) {
@@ -54,48 +54,13 @@ public class RemoteEventManager {
                         List<UserEntity> userlist = new ArrayList<>();
 
                         for (User user : company.getUserList()) {
-                            UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname(),false);
+                            UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname(), false);
                             userEntity.setCompany(companyEntity);
                             companyEntity.getUserList().add(userEntity);
                             DBController.insertAllUsers(userEntity);
                         }
                         DBController.insertAllCompanies(companyEntity);
                     }
-
-//                    for (Company company : companyList) {
-//                        CompanyEntity companyEntity = new CompanyEntity(company.getId(), company.getName());
-//                        DBController.attachCompany(companyEntity);
-//                        ArrayList<UserEntity> userEntityList = new ArrayList<>();
-//                        for (User user : company.getUserList()) {
-//                            UserEntity userEntity = new UserEntity(user.getId(), user.getName(), user.getSurname());
-//                            companyEntity.getUserList().add(userEntity);
-//                            userEntity.setCompany(companyEntity);
-//                            userEntityList.add(userEntity);
-//                            DBController.attachUser(userEntity);
-//                            DBController.insertAllUsers(userEntity);
-//
-//                        }
-//
-//                        companyEntity.setUserList(userEntityList);
-//                        DBController.insertAllCompanies(companyEntity);
-//                    }
-
-//
-//                    for (Company company : companyList) {
-//                        ArrayList<UserEntity> userEntityList = new ArrayList<>();
-//
-//                        for (User user : company.getUserList()) {
-//                            userEntityList.add(new UserEntity(user.getId(), user.getName(), user.getSurname()));
-//                        }
-//                        CompanyEntity companyEntity = new CompanyEntity(company.getId(), company.getName());
-//                        companyEntity.getUserList().addAll(userEntityList);
-//
-//                        DBController.insertAllCompanies(companyEntity);
-//                        for (User user : company.getUserList()) {
-//                            DBController.insertAllUsers(new UserEntity(user.getId(), user.getName(), user.getSurname()));
-//                        }
-//                    }
-
 
                 } else {
                     try {
@@ -114,9 +79,29 @@ public class RemoteEventManager {
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void getLocalData(LocalDbEvent event){
-        List<CompanyEntity> companyList=DBController.getAllCompany();
+    public void getLocalData(LocalDbEvent event) {
+        List<CompanyEntity> companyList = DBController.getAllCompany();
         EventBus.getDefault().post(new LocalDbDataEvent(companyList));
-        Log.e("TAG", "getLocalData: " );
     }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void blockUser(SetBlockUserEvent event) {
+        DBController.setBlockUsers(event.getUserList());
+        EventBus.getDefault().post(new LocalDbEvent());
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void getBlockUser(GetBlockUserEvent event) {
+        List<UserEntity> userList = DBController.getBlockUsers();
+        EventBus.getDefault().post(new BlockUserEvent(userList));
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void deleteUsers(DeleteUserEvent event) {
+        List<UserEntity> userList = event.getUserList();
+        DBController.deleteBlockUsers(userList);
+        EventBus.getDefault().post(new GetBlockUserEvent());
+    }
+
+
 }

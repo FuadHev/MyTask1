@@ -6,16 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".ui.managment.fragment.BlockedFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Blocked"
-        android:textSize="30sp"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_blockUser"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/block_toolbar"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/item_user" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/block_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:title="Block Users" />
 </androidx.constraintlayout.widget.ConstraintLayout>

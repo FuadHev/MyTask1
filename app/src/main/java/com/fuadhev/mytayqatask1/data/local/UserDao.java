@@ -3,6 +3,7 @@ package com.fuadhev.mytayqatask1.data.local;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity_;
 import com.fuadhev.mytayqatask1.data.local.db.ObjectBox;
+import com.fuadhev.mytayqatask1.data.network.model.User;
 
 import java.util.List;
 
@@ -17,18 +18,19 @@ public class UserDao {
         boxStore.put(userEntity);
     }
 
-    public static List<UserEntity> getBlockUser() {
-        List<UserEntity> blockUsers = boxStore.query().equal(UserEntity_.isBlock, true).build().find();
-
-        return blockUsers;
+    public static List<UserEntity> getBlockUsers() {
+        return boxStore.query().equal(UserEntity_.isBlock, true).build().find();
     }
 
-    public static void updateUsers(List<UserEntity> userEntities) {
+    public static void blockUsers(List<UserEntity> userEntities) {
         boxStore.put(userEntities);
-
     }
 
     public static List<UserEntity> getAllUser() {
         return boxStore.getAll();
+    }
+
+    public static void deleteBlockedUsers(List<UserEntity> deleteUserList){
+        boxStore.remove(deleteUserList);
     }
 }

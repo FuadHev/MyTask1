@@ -30,22 +30,6 @@ public class ManagementActivity extends AppCompatActivity {
         fragmentList.add(new CompanyFragment());
         fragmentList.add(new BlockedFragment());
 
-        // add the fragments
-
-//        List<CompanyEntity> list= DBController.getAllCompany();
-//        for(CompanyEntity companyEntity : list){
-//            Log.e("company",  companyEntity.getName());
-//            companyEntity.getUserList().size();
-//            for (UserEntity user:companyEntity.getUserList()){
-//                Log.e("user", user.getName());
-//            }
-//        }
-//        List<UserEntity> userList= DBController.getAllUser();
-//        for(UserEntity user : userList){
-//            Log.e("user", user.getCompany().toString());
-//        }
-
-
         binding.viewPager.setAdapter(adapter);
 
     }

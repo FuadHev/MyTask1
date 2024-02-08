@@ -99,7 +99,6 @@ implements IExpandable<CompanyItem.GroupViewHolder,UserItem> ,IHeader<CompanyIte
             tv_companyName=view.findViewById(R.id.tv_companyName);
             ic_more=view.findViewById(R.id.ic_more);
 //            /*ic_more.setOnClickListener(v -> */adapter.mItemClickListener.onItemClick(view, getFlexibleAdapterPosition());
-
         }
 
 

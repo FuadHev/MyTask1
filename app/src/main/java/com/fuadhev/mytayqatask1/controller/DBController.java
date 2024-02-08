@@ -4,11 +4,8 @@ import com.fuadhev.mytayqatask1.data.entity.CompanyEntity;
 import com.fuadhev.mytayqatask1.data.entity.UserEntity;
 import com.fuadhev.mytayqatask1.data.local.CompanyDao;
 import com.fuadhev.mytayqatask1.data.local.UserDao;
-import com.fuadhev.mytayqatask1.data.local.db.ObjectBox;
 
 import java.util.List;
-
-import io.objectbox.BoxStore;
 
 public class DBController {
 
@@ -37,7 +34,15 @@ public class DBController {
 //        UserDao.attachUser(userEntity);
 //    }
 
-    public static void updateUsers(List<UserEntity> userEntities ){
-        UserDao.updateUsers(userEntities);
+    public static List<UserEntity> getBlockUsers(){
+        return UserDao.getBlockUsers();
+    }
+
+    public static void setBlockUsers(List<UserEntity> userEntities ){
+        UserDao.blockUsers(userEntities);
+    }
+
+    public static void deleteBlockUsers(List<UserEntity> userList){
+        UserDao.deleteBlockedUsers(userList);
     }
 }
